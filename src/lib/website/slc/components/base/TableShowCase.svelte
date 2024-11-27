@@ -122,14 +122,14 @@
 <!-- Wrapper and Dragable Element -->
 <div
 	bind:this={dragableElement}
+	class="grid"
 	style:grid-template-rows={height}
 	style:grid-template-columns={width}
-	class="grid bg-slate-500 p-4"
 >
 	<!-- Dragable and Scrollable Element -->
-	<div class="relative flex flex-col items-center justify-center bg-background">
+	<div class="relative flex flex-col overflow-hidden bg-background">
 		<!-- Scrollable Element -->
-		<div class="flex w-full flex-1 overflow-hidden">
+		<div class="flex w-full flex-1 overflow-auto">
 			{#if children}
 				{@render children?.()}
 			{:else}
