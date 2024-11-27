@@ -3,14 +3,14 @@
 	"style": "default",
 	"tailwind": {
 		"config": "tailwind.config.ts",
-		"css": "src\\app.css",
-		"baseColor": "zinc"
+		"css": "src\\app.postcss",
+		"baseColor": "slate"
 	},
 	"aliases": {
-		"components": "$lib/website/components",
-		"utils": "$lib/website/utils",
-		"ui": "$lib/website/components/ui",
-		"hooks": "$lib/website/hooks"
+		"components": "$lib/website/shadcn/components",
+		"utils": "$lib/website/shadcn/utils",
+		"ui": "$lib/website/shadcn/components/ui",
+		"hooks": "$lib/website/shadcn/hooks"
 	},
 	"typescript": true,
 	"registry": "https://next.shadcn-svelte.com/registry"

@@ -11,10 +11,8 @@ const config: Config = {
 			center: true,
 			screens: {
 				sm: '640px',
-				md: '768px' /* 768px */,
-				lg: '1024px' /* 1140px */,
-				xl: '1280px' /* 1140px */,
-				'2xl': '1400px' /* 1140px yada 1400px */
+				md: '768px',
+				lg: '1140px'
 			}
 		},
 		extend: {
