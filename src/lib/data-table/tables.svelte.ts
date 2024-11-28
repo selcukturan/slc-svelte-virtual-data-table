@@ -32,10 +32,7 @@ class Table<TData extends Row> {
 		const dataLength = this.setData.length;
 
 		const rowVisibleStartIndex = Math.floor(scrollTop / rowHeight);
-		const rowVisibleEndIndex = Math.min(
-			dataLength - 1,
-			Math.floor((scrollTop + clientHeight) / rowHeight)
-		);
+		const rowVisibleEndIndex = Math.min(dataLength - 1, Math.floor((scrollTop + clientHeight) / rowHeight));
 		const rowOverscanStartIndex = Math.max(0, rowVisibleStartIndex - overscanThreshold);
 		const rowOverscanEndIndex = Math.min(dataLength - 1, rowVisibleEndIndex + overscanThreshold);
 
@@ -59,7 +56,7 @@ class Table<TData extends Row> {
 			})
 			.filter((column) => !column.hidden)
 	);
-	// derived footers. alt bilgi satırı bilgileri okurken bu değişken kullanılacak. `table.footers`
+	// derived footers. alt bilgi satırı bilgilerini okurken bu değişken kullanılacak. `table.footers`
 	footers = $derived.by(() => {
 		const footers = this.settings.footers;
 		const columns = this.columns;
@@ -81,10 +78,10 @@ class Table<TData extends Row> {
 	footerRowCount = 1;
 	overscanThreshold = $state(0);
 	gridTemplateRows: string = $derived.by(() => {
-		if (this.setData.length === 0) {
-			return `repeat(${this.headerRowCount}, ${this.settings.theadRowHeight}px) repeat(${this.footerRowCount}, ${this.settings.tfootRowHeight}px)`;
+		if (this.setData.length > 0) {
+			return `repeat(${this.headerRowCount}, ${this.settings.theadRowHeight}px) repeat(${this.setData.length}, ${this.settings.tbodyRowHeight}px) repeat(${this.footers.length}, ${this.settings.tfootRowHeight}px)`;
 		} else {
-			return `repeat(${this.headerRowCount}, ${this.settings.theadRowHeight}px) repeat(${this.setData.length}, ${this.settings.tbodyRowHeight}px) repeat(${this.footerRowCount}, ${this.settings.tfootRowHeight}px)`;
+			return `repeat(${this.headerRowCount}, ${this.settings.theadRowHeight}px)`;
 		}
 	});
 	gridTemplateColumns: string = $derived(this.columns.map(() => `150px`).join(' '));
@@ -92,10 +89,7 @@ class Table<TData extends Row> {
 
 // ################################## BEGIN Export Table Context ###############################################################
 const SLC_TABLE_CONTEXT_KEY = Symbol('SLC_TABLE_CONTEXT_KEY');
-export function setTable<TData extends Row>(
-	data: TData[],
-	settings?: Settings<TData>
-): Table<TData> {
+export function setTable<TData extends Row>(data: TData[], settings?: Settings<TData>): Table<TData> {
 	const table = new Table(data, settings);
 	setContext(SLC_TABLE_CONTEXT_KEY, table);
 	return table;

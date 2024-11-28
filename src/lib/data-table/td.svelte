@@ -34,7 +34,7 @@
 		const handleFocus = () => {
 			table.focusedCell = undefined;
 
-			const { row, col, originalrowindex, originalcolindex } = cellNode.dataset;
+			const { row, col, originalrowindex, originalcolindex, field } = cellNode.dataset;
 
 			const rowIndex = row ? +row : undefined;
 			const colIndex = col ? +col : undefined;
@@ -42,6 +42,7 @@
 			const originalColIndex = originalcolindex ? +originalcolindex : undefined;
 
 			if (
+				typeof field === 'undefined' ||
 				typeof rowIndex === 'undefined' ||
 				typeof colIndex === 'undefined' ||
 				typeof originalRowIndex === 'undefined' ||
@@ -58,7 +59,8 @@
 				cell,
 				originalCell,
 				originalRowIndex,
-				originalColIndex
+				originalColIndex,
+				field
 			};
 		};
 

@@ -2,6 +2,7 @@
 	import { TableShowCase } from '$lib/website/slc/components/base';
 	import { MainContent } from '$lib/website/slc/components/template';
 	import { BasicDataTable, type Settings } from '$lib/data-table/provider';
+	import { browser } from '$app/environment';
 
 	type DataType = {
 		sira: string;
@@ -15,6 +16,7 @@
 	};
 
 	function generateData(count: number): DataType[] {
+		if (!browser) return [];
 		const data: DataType[] = [];
 		for (let i = 1; i <= count; i++) {
 			data.push({
@@ -44,7 +46,9 @@
 			{ field: 'tutar', label: 'Tutar' }
 		],
 		footers: [
-			{ sira: '1', id: '2', mustahsil: '3', tip: '4', bolge: '5', il: '6', ilce: '7', tutar: '8' }
+			{ sira: 'F1', id: '2', il: '6', ilce: '7', tutar: '8' },
+			{ sira: 'F2', id: '2', mustahsil: '3', tip: '4', bolge: '5', il: '6', ilce: '7', tutar: '8' },
+			{ sira: 'F3' }
 		]
 	});
 
@@ -60,11 +64,14 @@
 </MainContent>
 <MainContent>
 	<div>
+		<button onclick={() => setPageData(0)} class="bg-surface-200 p-1">0</button>
+		<button onclick={() => setPageData(3)} class="bg-surface-200 p-1">3</button>
+		<button onclick={() => setPageData(5)} class="bg-surface-200 p-1">5</button>
+		<button onclick={() => setPageData(10)} class="bg-surface-200 p-1">10</button>
 		<button onclick={() => setPageData(100)} class="bg-surface-200 p-1">100</button>
 		<button onclick={() => setPageData(1000)} class="bg-surface-200 p-1">1000</button>
 		<button onclick={() => setPageData(10000)} class="bg-surface-200 p-1">10000</button>
 		<button onclick={() => setPageData(100000)} class="bg-surface-200 p-1">100000</button>
-		<button onclick={() => setPageData(1000000)} class="bg-surface-200 p-1">1000000</button>
 		<p>Current Count:{data.length}</p>
 	</div>
 </MainContent>

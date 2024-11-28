@@ -6,10 +6,9 @@
 
 	let globalContext = getGlobalContext();
 
-	let dragableElement: HTMLDivElement;
 	let dragging = $state(false);
 
-	const defaultWidth = '1fr';
+	const defaultWidth = '100%';
 	let width = $state(defaultWidth);
 	let verticalMaxWidth: number | null = null;
 	let verticalHandleDownClientX: number;
@@ -119,44 +118,44 @@
 	});
 </script>
 
-<!-- Wrapper and Dragable Element -->
-<div
-	bind:this={dragableElement}
-	class="grid"
-	style:grid-template-rows={height}
-	style:grid-template-columns={width}
->
-	<!-- Dragable and Scrollable Element -->
-	<div class="relative flex flex-col overflow-hidden bg-background">
-		<!-- Scrollable Element -->
-		<div class="flex w-full flex-1 overflow-auto">
-			{#if children}
-				{@render children?.()}
-			{:else}
-				<div class="flex h-full w-full items-center justify-center">
-					<div>İçerik Yok</div>
-				</div>
-			{/if}
-		</div>
-		<!-- Size Handle -->
-		<div
-			use:verticalHandleAction={(e) => verticalHandleResizeUpdate(e)}
-			class:vertical-handle-position={true}
-			class="absolute z-30 inline-flex h-16 w-2 cursor-col-resize !touch-none select-none items-center justify-center rounded-full bg-primary"
-		></div>
-		<div
-			use:horizontalHandleAction={(e) => horizontalHandleResizeUpdate(e)}
-			class:horizonral-handle-position={true}
-			class="absolute z-30 inline-flex h-2 w-16 cursor-row-resize !touch-none select-none items-center justify-center rounded-full bg-primary"
-		></div>
+<div class="relative mt-2 rounded-sm border-8 border-amber-500/60" style:height style:width>
+	<div class="h-full w-full">
+		{#if children}
+			{@render children?.()}
+		{:else}
+			<div class="flex h-full w-full items-center justify-center">
+				<div>İçerik Yok</div>
+			</div>
+		{/if}
+	</div>
+	<!-- Size Handle -->
+	<div
+		use:verticalHandleAction={(e) => verticalHandleResizeUpdate(e)}
+		class:vertical-handle-position={true}
+		class="absolute z-30 inline-flex h-16 w-2 cursor-col-resize !touch-none select-none items-center justify-center rounded-full bg-primary"
+	></div>
+	<div
+		use:horizontalHandleAction={(e) => horizontalHandleResizeUpdate(e)}
+		class:horizonral-handle-position={true}
+		class="absolute z-30 inline-flex h-2 w-16 cursor-row-resize !touch-none select-none items-center justify-center rounded-full bg-primary"
+	></div>
+
+	<div
+		class:horizonral-title-position={true}
+		class="absolute z-30 inline-flex w-16 select-none items-center justify-center rounded-sm bg-amber-500 text-slate-950"
+	>
+		Vitrin
 	</div>
 </div>
 
 <style lang="postcss">
 	.vertical-handle-position {
-		@apply right-0 top-1/2 -translate-y-1/2 translate-x-1/2;
+		@apply right-0 top-1/2 -translate-y-1/2 translate-x-full;
 	}
 	.horizonral-handle-position {
-		@apply bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2;
+		@apply bottom-0 left-1/2 -translate-x-1/2 translate-y-full;
+	}
+	.horizonral-title-position {
+		@apply left-16 top-0 -translate-x-1/2 -translate-y-full;
 	}
 </style>

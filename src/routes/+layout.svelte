@@ -4,7 +4,7 @@
 	import { setGlobalContext } from '$lib/website/slc/context/global.svelte';
 	import { afterNavigate } from '$app/navigation';
 	import { Site, Header, Footer, Page, Sidebar, Main } from '$lib/website/slc/components/template';
-
+	/* import { browser } from '$app/environment'; */
 	let { children } = $props();
 
 	const globalContext = setGlobalContext();
@@ -40,6 +40,9 @@
 
 <svelte:window bind:innerWidth={globalContext.data.windowWidth} />
 
+<!-- {#if browser}
+	<ModeWatcher />
+{/if} -->
 <ModeWatcher />
 
 <Site>

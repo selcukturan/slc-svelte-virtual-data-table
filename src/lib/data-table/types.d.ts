@@ -50,4 +50,5 @@ export type FocucedCell = {
 	originalCell: string;
 	originalRowIndex: number;
 	originalColIndex: number;
+	field: string;
 };

@@ -4,6 +4,6 @@ export { default as Th } from './th.svelte';
 export { default as Td } from './td.svelte';
 export { default as Tf } from './tf.svelte';
 
-export { default as TrH } from './trh.svelte';
-export { default as TrD } from './trd.svelte';
-export { default as TrF } from './trf.svelte';
+export { default as Trh } from './trh.svelte';
+export { default as Trd } from './trd.svelte';
+export { default as Trf } from './trf.svelte';

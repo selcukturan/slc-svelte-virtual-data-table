@@ -2,6 +2,7 @@
 	import type { HTMLAttributes } from 'svelte/elements';
 	import type { Footers, Row, Columns } from './types';
 	import type { Snippet } from 'svelte';
+	import { getTable } from './tables.svelte';
 
 	type Props = HTMLAttributes<HTMLDivElement> & {
 		data?: TData[];
@@ -13,6 +14,11 @@
 		class?: string;
 	};
 	const { data, children, fi, foot, col, ci, class: classes, ...attributes }: Props = $props();
+
+	const table = getTable<TData>();
+	const bottom = $derived(
+		`${(table.footers.length - (fi === undefined ? 0 : fi) - 1) * table.settings.tfootRowHeight}px`
+	);
 </script>
 
 <div
@@ -20,6 +26,7 @@
 	class:slc-table-tf={true}
 	class={classes}
 	style:grid-row-start="var(--slc-grid-row-start)"
+	style:bottom
 	data-foot={fi}
 	data-col={ci}
 	data-originalcolindex={col?.originalColIndex}
@@ -52,11 +59,11 @@
 <style lang="postcss">
 	.slc-table-tf {
 		@apply sticky;
-		@apply bottom-0;
+		/* @apply bottom-0; */
 		@apply z-[4];
 		@apply select-none;
 		@apply overflow-hidden;
-		/* @apply border-b; */
+		@apply border-b;
 		@apply border-r;
 		@apply border-solid;
 		@apply px-2;

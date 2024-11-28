@@ -13,15 +13,17 @@
 	const { data, children, fi, class: classes, ...attributes }: Props = $props();
 
 	const table = getTable<TData>();
+
+	const gridRowStart = $derived(
+		table.setData.length + table.headerRowCount + (fi === undefined ? 0 : fi) + 1
+	);
 </script>
 
 <div
 	role="row"
 	class:slc-table-trf={true}
 	class={classes}
-	style:--slc-grid-row-start={table.setData && table.setData.length > 0
-		? table.setData.length + table.headerRowCount + table.footerRowCount
-		: 2}
+	style:--slc-grid-row-start={gridRowStart}
 	data-originalrowindex={fi}
 	{...attributes}
 >

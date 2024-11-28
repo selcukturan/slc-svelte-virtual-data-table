@@ -83,6 +83,12 @@
 	{@render toolbar?.()}
 	<div class:slc-table-container={true} class={tableContainerClass}>
 		<div
+			style:display={table.setData.length > 0 ? 'none' : 'flex'}
+			class="pointer-events-none absolute z-50 flex h-full w-full items-center justify-center bg-transparent"
+		>
+			Gösterilecek veri yok.
+		</div>
+		<div
 			role="grid"
 			bind:this={table.element}
 			bind:clientHeight={table.clientHeight}
@@ -98,10 +104,11 @@
 			{#each table.data as row, rowindex (row.id)}
 				{@render tbody?.(row, rowindex)}
 			{/each}
-
-			{#each table.footers as foot, footerindex}
-				{@render tfoot?.(foot, footerindex)}
-			{/each}
+			{#if table.setData.length > 0}
+				{#each table.footers as foot, footerindex}
+					{@render tfoot?.(foot, footerindex)}
+				{/each}
+			{/if}
 		</div>
 	</div>
 	{@render statusbar?.()}
