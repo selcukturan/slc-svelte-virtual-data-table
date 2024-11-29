@@ -10,7 +10,7 @@
 
 <style lang="postcss">
 	.base {
-		@apply grid space-y-4 bg-transparent p-4;
+		@apply grid grid-cols-1 space-y-4 bg-transparent p-4;
 	}
 	.visible-right-sidebar {
 		@apply lg:grid-cols-[minmax(0px,1fr)_auto];
