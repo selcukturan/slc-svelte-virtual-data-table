@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Main, MainContent, SidebarRight } from '$lib/website/slc/components/template';
+	import { Main, MainContent } from '$lib/website/slc/components/template';
 </script>
 
 <Main>

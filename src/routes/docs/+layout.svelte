@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import { Page, Main, SidebarLeft, SidebarRight } from '$lib/website/slc/components/template';
+	import { Page, SidebarLeft } from '$lib/website/slc/components/template';
 	let { children }: { children?: Snippet } = $props();
 </script>
 
