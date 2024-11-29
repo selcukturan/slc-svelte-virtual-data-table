@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { TableShowCase } from '$lib/website/slc/components/base';
-	import { MainContent } from '$lib/website/slc/components/template';
-	import { BasicDataTable, type Settings } from '$lib/data-table/provider';
+	import { Page, Main, MainContent } from '$lib/website/slc/components/template';
+	import { BaseDataTable, type Settings } from '$lib/data-table/provider';
 	import { browser } from '$app/environment';
 
 	type DataType = {
@@ -57,22 +57,27 @@
 	};
 </script>
 
-<MainContent>
-	<TableShowCase>
-		<BasicDataTable {data} {settings} />
-	</TableShowCase>
-</MainContent>
-<MainContent>
-	<div>
-		<button onclick={() => setPageData(0)} class="bg-surface-200 p-1">0</button>
-		<button onclick={() => setPageData(3)} class="bg-surface-200 p-1">3</button>
-		<button onclick={() => setPageData(5)} class="bg-surface-200 p-1">5</button>
-		<button onclick={() => setPageData(10)} class="bg-surface-200 p-1">10</button>
-		<button onclick={() => setPageData(100)} class="bg-surface-200 p-1">100</button>
-		<button onclick={() => setPageData(1000)} class="bg-surface-200 p-1">1000</button>
-		<button onclick={() => setPageData(10000)} class="bg-surface-200 p-1">10000</button>
-		<button onclick={() => setPageData(100000)} class="bg-surface-200 p-1">100000</button>
-		<p>Current Count:{data.length}</p>
-	</div>
-</MainContent>
-<MainContent>Paragraph 3</MainContent>
+<Page>
+	<Main>
+		<MainContent>
+			<a href="/docs">Documentation</a>
+			<TableShowCase>
+				<BaseDataTable {data} {settings} />
+			</TableShowCase>
+		</MainContent>
+		<MainContent>
+			<div>
+				<button onclick={() => setPageData(0)} class="bg-surface-200 p-1">0</button>
+				<button onclick={() => setPageData(3)} class="bg-surface-200 p-1">3</button>
+				<button onclick={() => setPageData(5)} class="bg-surface-200 p-1">5</button>
+				<button onclick={() => setPageData(10)} class="bg-surface-200 p-1">10</button>
+				<button onclick={() => setPageData(100)} class="bg-surface-200 p-1">100</button>
+				<button onclick={() => setPageData(1000)} class="bg-surface-200 p-1">1000</button>
+				<button onclick={() => setPageData(10000)} class="bg-surface-200 p-1">10000</button>
+				<button onclick={() => setPageData(100000)} class="bg-surface-200 p-1">100000</button>
+				<p>Current Count:{data.length}</p>
+			</div>
+		</MainContent>
+		<MainContent>Paragraph 3</MainContent>
+	</Main>
+</Page>

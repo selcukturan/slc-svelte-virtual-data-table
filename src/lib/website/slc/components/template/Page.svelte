@@ -1,7 +1,18 @@
 <script lang="ts">
-	let { children } = $props();
+	import type { Snippet } from 'svelte';
+	let { children, sidebarLeft }: { children?: Snippet; sidebarLeft?: Snippet } = $props();
 </script>
 
-<div class="container mx-auto grid grid-cols-1 xl:grid-cols-[auto_minmax(0px,_1fr)]">
+<section class:base={true} class:visible-left-sidebar={sidebarLeft}>
+	{@render sidebarLeft?.()}
 	{@render children?.()}
-</div>
+</section>
+
+<style lang="postcss">
+	.base {
+		@apply container mx-auto grid grid-cols-1;
+	}
+	.visible-left-sidebar {
+		@apply lg:grid-cols-[auto_minmax(0px,1fr)];
+	}
+</style>

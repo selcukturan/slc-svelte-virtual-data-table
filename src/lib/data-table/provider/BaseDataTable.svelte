@@ -1,6 +1,6 @@
 <script lang="ts" generics="TData extends Row">
 	import { setTable, type Settings, type Row } from '../tables.svelte';
-	import { Table, Th, Td, Tf, Trh, Trd, Trf } from '../';
+	import { Table, Th, Td, Tf, Trh, Trd, Trf } from '..';
 
 	const { data, settings }: { data: TData[]; settings: Settings<TData> } = $props();
 	const table = setTable<TData>(data, settings);

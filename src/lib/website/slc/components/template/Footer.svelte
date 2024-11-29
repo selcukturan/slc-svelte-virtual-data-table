@@ -1,9 +1,10 @@
 <script lang="ts">
-	let { children } = $props();
+	/* let { children } = $props(); */
 </script>
 
-<header
+<footer
 	class="border-t border-border/70 bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60"
 >
-	{@render children?.()}
-</header>
+	<!-- {@render children?.()} -->
+	(footer)
+</footer>

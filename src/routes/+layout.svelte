@@ -1,11 +1,11 @@
 <script lang="ts">
 	import '../app.postcss';
+	import type { Snippet } from 'svelte';
 	import { ModeWatcher } from 'mode-watcher';
 	import { setGlobalContext } from '$lib/website/slc/context/global.svelte';
 	import { afterNavigate } from '$app/navigation';
-	import { Site, Header, Footer, Page, Sidebar, Main } from '$lib/website/slc/components/template';
-	/* import { browser } from '$app/environment'; */
-	let { children } = $props();
+	import { Site, Header, Footer } from '$lib/website/slc/components/template';
+	let { children }: { children?: Snippet } = $props();
 
 	const globalContext = setGlobalContext();
 
@@ -14,9 +14,10 @@
 	});
 
 	$effect(() => {
-		// CSS medya sorguları ile yapamadığımız şeyler için kullanılabilir ekran ölçüleri
+		// CSS medya sorguları ile yapamadığımız şeyler için kullanılabilir JAVASCRIPT ekran ölçüleri
 		const size = globalContext.data.screens;
 		const w = globalContext.data.windowWidth;
+
 		if (
 			w === undefined ||
 			size === undefined ||
@@ -40,18 +41,10 @@
 
 <svelte:window bind:innerWidth={globalContext.data.windowWidth} />
 
-<!-- {#if browser}
-	<ModeWatcher />
-{/if} -->
 <ModeWatcher />
 
 <Site>
 	<Header />
-	<Page>
-		<Sidebar />
-		<Main>
-			{@render children?.()}
-		</Main>
-	</Page>
-	<Footer>(footer)</Footer>
+	{@render children?.()}
+	<Footer />
 </Site>
