@@ -2,9 +2,9 @@
 	import '../app.postcss';
 	import type { Snippet } from 'svelte';
 	import { ModeWatcher } from 'mode-watcher';
-	import { setGlobalContext } from '$lib/website/slc/context/global.svelte';
+	import { setGlobalContext } from '$lib/website/slc/contexts/global.svelte';
 	import { afterNavigate } from '$app/navigation';
-	import { Site, Header, Footer } from '$lib/website/slc/components/template';
+	import { Site, Header, Footer } from '$lib/website/slc/templates/base';
 	let { children }: { children?: Snippet } = $props();
 
 	const globalContext = setGlobalContext();

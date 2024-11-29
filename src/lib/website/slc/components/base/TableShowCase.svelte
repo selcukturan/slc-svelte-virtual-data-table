@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getGlobalContext } from '$lib/website/slc/context/global.svelte';
+	import { getGlobalContext } from '$lib/website/slc/contexts/global.svelte';
 	import type { Snippet } from 'svelte';
 
 	let { children }: { children?: Snippet } = $props();

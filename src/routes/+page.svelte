@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { TableShowCase } from '$lib/website/slc/components/base';
-	import { Page, Main, MainContent } from '$lib/website/slc/components/template';
+	import { Page, Main, MainContent } from '$lib/website/slc/templates/base';
 	import { BaseDataTable, type Settings } from '$lib/data-table/provider';
 	import { browser } from '$app/environment';
 

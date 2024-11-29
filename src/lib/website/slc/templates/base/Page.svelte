@@ -3,7 +3,7 @@
 	let { children, sidebarLeft }: { children?: Snippet; sidebarLeft?: Snippet } = $props();
 </script>
 
-<section class:base={true} class:visible-left-sidebar={sidebarLeft}>
+<section data-component="Page" class:base={true} class:visible-left-sidebar={sidebarLeft}>
 	{@render sidebarLeft?.()}
 	{@render children?.()}
 </section>

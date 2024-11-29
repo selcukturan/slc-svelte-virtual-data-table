@@ -1,6 +1,9 @@
 <!-- Header height'i değiştirmek için `SidebarLeft`, `SidebarRight` ve `Header`da değişiklik yapılacak -->
 <!-- Header Height = 3.5rem = lg:top-[3.5rem] -->
-<aside class="hidden bg-transparent p-4 lg:sticky lg:top-[3.5rem] lg:block lg:h-screen">
+<aside
+	data-component="SidebarRight"
+	class="hidden bg-transparent p-4 lg:sticky lg:top-[3.5rem] lg:block lg:h-screen"
+>
 	<div class="flex h-full flex-col border border-border/70 md:w-60">
 		<div class="hidden">h</div>
 		<div class="flex flex-1 flex-col gap-2 overflow-hidden overflow-y-auto p-4">
