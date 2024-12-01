@@ -6,8 +6,8 @@
 	const table = setTable<TData>(data, settings);
 
 	$effect(() => {
-		if (data) table.setData = data;
-		if (settings) table.setSettings = settings;
+		table.setData = data;
+		table.setSettings = settings;
 	});
 </script>
 

@@ -5,18 +5,18 @@
 	import { getTable } from './tables.svelte';
 
 	type Props = HTMLAttributes<HTMLDivElement> & {
-		data?: TData[];
+		data: TData[];
 		children: Snippet;
-		fi?: number;
+		fi: number;
 		class?: string;
 	};
 	const { data, children, fi, class: classes, ...attributes }: Props = $props();
 
 	const table = getTable<TData>();
 
-	const gridRowStart = $derived(
-		table.setData.length + table.headerRowCount + (fi === undefined ? 0 : fi) + 1
-	);
+	const headerCount = 1;
+	const footerIndexToRow = 1;
+	const gridRowStart = $derived(table.setData.length + headerCount + fi + footerIndexToRow);
 </script>
 
 <div

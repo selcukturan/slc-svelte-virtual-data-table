@@ -2,25 +2,23 @@
 	import type { Row } from './types';
 	import type { HTMLAttributes } from 'svelte/elements';
 	import type { Snippet } from 'svelte';
-	import { getTable } from './tables.svelte';
+	// import { getTable } from './tables.svelte';
 
 	type Props = HTMLAttributes<HTMLDivElement> & {
 		children: Snippet;
 		class?: string;
-		ri?: number;
-		row?: TData;
+		ri: number;
+		row: TData;
 	};
 	const { children, class: classes, ri, row, ...attributes }: Props = $props();
 
-	const table = getTable<TData>();
+	// const table = getTable<TData>();
 
-	const originalRowIndex =
-		row?.originalRowIndex !== null && row?.originalRowIndex !== undefined
-			? +row.originalRowIndex
-			: undefined;
+	const headerCount = 1;
+	const indexToRow = 1;
 	const gridRowStart =
-		originalRowIndex !== undefined
-			? originalRowIndex + table.headerRowCount + table.footerRowCount
+		typeof row.originalRowIndex === 'number'
+			? row.originalRowIndex + headerCount + indexToRow
 			: undefined;
 </script>
 
@@ -30,7 +28,7 @@
 	class={classes}
 	style:--slc-grid-row-start={gridRowStart}
 	aria-rowindex={ri}
-	data-originalrowindex={originalRowIndex}
+	data-originalrowindex={row.originalRowIndex}
 	{...attributes}
 >
 	{@render children?.()}

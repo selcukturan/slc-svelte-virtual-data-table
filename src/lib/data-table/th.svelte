@@ -1,13 +1,13 @@
 <script lang="ts" generics="TData extends Row">
 	import type { HTMLAttributes } from 'svelte/elements';
-	import type { Columns, Row } from './types';
+	import type { Column, Row } from './types';
 	import { type Snippet } from 'svelte';
 
 	type Props = HTMLAttributes<HTMLDivElement> & {
-		data?: TData[];
+		data: TData[];
 		children: Snippet;
-		ci?: number;
-		col?: Columns<TData>;
+		ci: number;
+		col: Column<TData>;
 		class?: string;
 	};
 
@@ -20,21 +20,21 @@
 	class={classes}
 	style:grid-row-start="var(--slc-grid-row-start)"
 	data-col={ci}
-	data-originalcolindex={col?.originalColIndex}
+	data-originalcolindex={col.originalColIndex}
 	{...attributes}
 >
 	<div class="flex h-full w-full justify-between">
 		<div class="hidden items-center">x</div>
 		<div
-			style:justify-content={col?.alignHeader
-				? col?.alignHeader === 'center'
+			style:justify-content={col.alignHeader
+				? col.alignHeader === 'center'
 					? 'center'
-					: col?.alignHeader === 'right'
+					: col.alignHeader === 'right'
 						? 'flex-end'
 						: 'flex-start'
-				: col?.align === 'center'
+				: col.align === 'center'
 					? 'center'
-					: col?.align === 'right'
+					: col.align === 'right'
 						? 'flex-end'
 						: 'flex-start'}
 			class="flex min-w-0 flex-1 items-center"

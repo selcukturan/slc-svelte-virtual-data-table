@@ -1,4 +1,4 @@
-import type { Settings, DefaultSettings, Row, FocucedCell, Footers } from './types';
+import type { Settings, DefaultSettings, Row, FocucedCell, Footer } from './types';
 import { getContext, setContext } from 'svelte';
 
 class Table<TData extends Row> {
@@ -32,7 +32,10 @@ class Table<TData extends Row> {
 		const dataLength = this.setData.length;
 
 		const rowVisibleStartIndex = Math.floor(scrollTop / rowHeight);
-		const rowVisibleEndIndex = Math.min(dataLength - 1, Math.floor((scrollTop + clientHeight) / rowHeight));
+		const rowVisibleEndIndex = Math.min(
+			dataLength - 1,
+			Math.floor((scrollTop + clientHeight) / rowHeight)
+		);
 		const rowOverscanStartIndex = Math.max(0, rowVisibleStartIndex - overscanThreshold);
 		const rowOverscanEndIndex = Math.min(dataLength - 1, rowVisibleEndIndex + overscanThreshold);
 
@@ -61,27 +64,25 @@ class Table<TData extends Row> {
 		const footers = this.settings.footers;
 		const columns = this.columns;
 		return footers.map((footer) => {
-			const footerRow: Partial<Footers<TData>> = {};
+			const footerRow: Partial<Footer<TData>> = {};
 			columns.forEach((column) => {
 				footerRow[column.field] = footer[column.field];
 			});
-			return footerRow as Footers<TData>;
+			return footerRow as Footer<TData>;
 		});
 	});
 	// ################################## END Properties ###############################################################
 
-	focusedCell?: FocucedCell = $state();
+	focusedCell?: FocucedCell<TData> = $state();
 	scrollTop = $state(0);
 	lastScrollTop = 0;
 	clientHeight = $state(0);
-	headerRowCount = 1;
-	footerRowCount = 1;
 	overscanThreshold = $state(0);
 	gridTemplateRows: string = $derived.by(() => {
 		if (this.setData.length > 0) {
-			return `repeat(${this.headerRowCount}, ${this.settings.theadRowHeight}px) repeat(${this.setData.length}, ${this.settings.tbodyRowHeight}px) repeat(${this.footers.length}, ${this.settings.tfootRowHeight}px)`;
+			return `repeat(${1}, ${this.settings.theadRowHeight}px) repeat(${this.setData.length}, ${this.settings.tbodyRowHeight}px) repeat(${this.footers.length}, ${this.settings.tfootRowHeight}px)`;
 		} else {
-			return `repeat(${this.headerRowCount}, ${this.settings.theadRowHeight}px)`;
+			return `repeat(${1}, ${this.settings.theadRowHeight}px)`;
 		}
 	});
 	gridTemplateColumns: string = $derived(this.columns.map(() => `150px`).join(' '));
@@ -89,7 +90,10 @@ class Table<TData extends Row> {
 
 // ################################## BEGIN Export Table Context ###############################################################
 const SLC_TABLE_CONTEXT_KEY = Symbol('SLC_TABLE_CONTEXT_KEY');
-export function setTable<TData extends Row>(data: TData[], settings?: Settings<TData>): Table<TData> {
+export function setTable<TData extends Row>(
+	data: TData[],
+	settings?: Settings<TData>
+): Table<TData> {
 	const table = new Table(data, settings);
 	setContext(SLC_TABLE_CONTEXT_KEY, table);
 	return table;

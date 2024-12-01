@@ -8,13 +8,14 @@
 		class?: string;
 	};
 	const { children, class: classes, ...attributes }: Props = $props();
+	const headerCount = 1;
 </script>
 
 <div
 	role="row"
 	class:slc-table-trh={true}
 	class={classes}
-	style:--slc-grid-row-start={1}
+	style:--slc-grid-row-start={headerCount}
 	{...attributes}
 >
 	{@render children?.()}

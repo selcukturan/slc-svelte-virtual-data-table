@@ -1,7 +1,7 @@
 export type RowValue = unknown | object | any[];
 export type Row = {
-	id: string | number; // id zorunlu
 	[key: string]: RowValue;
+	originalRowIndex?: number;
 };
 
 export type Field<TData> = keyof TData;
@@ -15,8 +15,8 @@ export type Width =
 	| `minmax(${number}fr,${number}fr)`
 	| `minmax(${number}px,${number}px)`;
 
-export type Columns<TData> = {
-	field: Field<TData>; // field zorunlu
+export type Column<TData> = {
+	field: Field<TData>; // field required
 	label?: string;
 	hidden?: boolean;
 	resizeable?: boolean;
@@ -28,7 +28,7 @@ export type Columns<TData> = {
 	originalColIndex?: number;
 };
 
-export type Footers<TData> = {
+export type Footer<TData> = {
 	[K in keyof TData]?: string;
 };
 
@@ -38,17 +38,17 @@ export type DefaultSettings<TData> = {
 	theadRowHeight: number;
 	tbodyRowHeight: number;
 	tfootRowHeight: number;
-	columns: Columns<TData>[];
-	footers: Footers<TData>[];
+	columns: Column<TData>[];
+	footers: Footer<TData>[];
 };
 export type Settings<TData> = Partial<DefaultSettings<TData>>;
 
-export type FocucedCell = {
+export type FocucedCell<TData> = {
 	rowIndex: number;
 	colIndex: number;
 	cell: string;
 	originalCell: string;
 	originalRowIndex: number;
 	originalColIndex: number;
-	field: string;
+	field: Field<TData>;
 };

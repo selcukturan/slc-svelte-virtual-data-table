@@ -2,6 +2,7 @@
 	import { TableShowCase } from '$lib/website/slc/components/base';
 	import { Page, Main, MainContent } from '$lib/website/slc/templates/base';
 	import { BaseDataTable, type Settings } from '$lib/data-table/provider';
+	import type { Column } from '$lib/data-table/types';
 	import { browser } from '$app/environment';
 
 	type DataType = {
@@ -46,14 +47,29 @@
 			{ field: 'tutar', label: 'Tutar' }
 		],
 		footers: [
-			{ sira: 'F1', id: '2', il: '6', ilce: '7', tutar: '8' },
 			{ sira: 'F2', id: '2', mustahsil: '3', tip: '4', bolge: '5', il: '6', ilce: '7', tutar: '8' },
-			{ sira: 'F3' }
+			{ sira: 'F2', id: '2', mustahsil: '3', tip: '4', bolge: '5', il: '6', ilce: '7', tutar: '8' }
 		]
 	});
 
 	const setPageData = (count: number) => {
 		data = generateData(count);
+	};
+	const setFirstRow = () => {
+		data[0] = {
+			sira: '0',
+			id: '0',
+			mustahsil: 'New 0',
+			tip: 'AVANS_ODEME',
+			bolge: 'IC EGE',
+			il: 'DENIZLI',
+			ilce: 'CAL',
+			tutar: (Math.random() * 100000).toFixed(2)
+		};
+	};
+	const hiddenSecondColumn = () => {
+		if (typeof settings.columns === 'undefined') return;
+		settings.columns[1].hidden = !settings.columns[1].hidden;
 	};
 </script>
 
@@ -75,6 +91,10 @@
 				<button onclick={() => setPageData(1000)} class="bg-surface-200 p-1">1000</button>
 				<button onclick={() => setPageData(10000)} class="bg-surface-200 p-1">10000</button>
 				<button onclick={() => setPageData(100000)} class="bg-surface-200 p-1">100000</button>
+				<button onclick={() => setFirstRow()} class="bg-surface-200 p-1">setFirstRow</button>
+				<button onclick={() => hiddenSecondColumn()} class="bg-surface-200 p-1"
+					>hiddenSecondColumn</button
+				>
 				<p>Current Count:{data.length}</p>
 			</div>
 		</MainContent>

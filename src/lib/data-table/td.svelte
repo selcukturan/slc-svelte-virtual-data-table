@@ -1,34 +1,26 @@
 <script lang="ts" generics="TData extends Row">
-	import type { Row, Columns } from './types';
+	import type { Row, Column } from './types';
 	import type { HTMLAttributes } from 'svelte/elements';
 	import { type Snippet } from 'svelte';
 	import { getTable } from './tables.svelte';
 
 	type Props = HTMLAttributes<HTMLDivElement> & {
-		row?: TData;
+		row: TData;
 		children: Snippet;
-		ri?: number;
-		ci?: number;
-		col?: Columns<TData>;
+		ri: number;
+		ci: number;
+		col: Column<TData>;
 		class?: string;
 	};
 	const { row, children, ri, ci, col, class: classes, ...attributes }: Props = $props();
 
 	const table = getTable<TData>();
 
-	const cellOriginalRowIndex =
-		row?.originalRowIndex !== null && row?.originalRowIndex !== undefined
-			? +row.originalRowIndex
-			: undefined;
-	const cellOriginalColIndex =
-		col?.originalColIndex !== null && col?.originalColIndex !== undefined
-			? +col.originalColIndex
-			: undefined;
-	const cellReferance = ri === undefined || ci === undefined ? undefined : `r${ri}c${ci}`;
+	const cellReferance = `r${ri}c${ci}`;
 	const focusedCellReferance =
-		cellOriginalRowIndex === undefined || cellOriginalColIndex === undefined
-			? ''
-			: `r${cellOriginalRowIndex}c${cellOriginalColIndex}`;
+		typeof row.originalRowIndex === 'number' && typeof col.originalColIndex === 'number'
+			? `r${row.originalRowIndex}c${col.originalColIndex}`
+			: '';
 
 	const focusAction = (cellNode: HTMLDivElement) => {
 		const handleFocus = () => {
@@ -47,8 +39,9 @@
 				typeof colIndex === 'undefined' ||
 				typeof originalRowIndex === 'undefined' ||
 				typeof originalColIndex === 'undefined'
-			)
+			) {
 				return;
+			}
 
 			const cell = `r${rowIndex}c${colIndex}`;
 			const originalCell = `r${originalRowIndex}c${originalColIndex}`;
@@ -89,8 +82,8 @@
 	data-col={ci}
 	data-row={ri}
 	data-cell={cellReferance}
-	data-originalrowindex={cellOriginalRowIndex}
-	data-originalcolindex={cellOriginalColIndex}
+	data-originalrowindex={row.originalRowIndex}
+	data-originalcolindex={col.originalColIndex}
 	data-originalcell={focusedCellReferance}
 	data-field={col?.field}
 	spellcheck="false"
@@ -99,9 +92,9 @@
 	<div class="flex h-full w-full justify-between">
 		<div class="hidden items-center">x</div>
 		<div
-			style:justify-content={col?.align === 'center'
+			style:justify-content={col.align === 'center'
 				? 'center'
-				: col?.align === 'right'
+				: col.align === 'right'
 					? 'flex-end'
 					: 'flex-start'}
 			class="flex min-w-0 flex-1 items-center"

@@ -1,16 +1,16 @@
 <script lang="ts" generics="TData extends Row">
-	import type { Row, Footers } from './types';
+	import type { Row, Footer } from './types';
 	import type { HTMLAttributes } from 'svelte/elements';
 	import type { Snippet } from 'svelte';
 	import { tick } from 'svelte';
 	import { getTable } from './tables.svelte';
 
 	type Props = HTMLAttributes<HTMLDivElement> & {
-		data?: TData[];
+		data: TData[];
 		toolbar?: Snippet;
-		thead?: Snippet;
-		tbody?: Snippet<[TData, number]>;
-		tfoot?: Snippet<[Footers<TData>, number]>;
+		thead: Snippet;
+		tbody: Snippet<[TData, number]>;
+		tfoot?: Snippet<[Footer<TData>, number]>;
 		statusbar?: Snippet;
 		class?: string;
 		tableContainerClass?: string;
@@ -40,33 +40,30 @@
 
 		const setScrollTop = async () => {
 			if (isScrolling) return; // Eğer fonksiyon zaten çalışıyorsa, yeni çağrıyı atlar
-			const { scrollLeft, scrollTop, clientHeight, clientWidth, scrollHeight, scrollWidth } =
-				tableNode;
+			const { scrollTop } = tableNode;
 			if (scrollTop === table.lastScrollTop) return; // virtual scroll özelliği sadece dikey scroll'da çalışır
 
-			table.lastScrollTop = scrollTop;
 			isScrolling = true;
+			table.lastScrollTop = scrollTop;
+			table.scrollTop = table.lastScrollTop; // scrollTop değiştiğinde `data` yeniden hesaplanır
+			await tick(); // table.scrollTop state'i değiştiğinde, dom'da yapılacak tüm değişiklikleri bekler.
+			isScrolling = false;
 
-			const scrollableHeight = scrollHeight - clientHeight;
+			/* const scrollableHeight = scrollHeight - clientHeight;
 			const scrollableWidth = scrollWidth - clientWidth;
 			const scrollableTop = Math.floor(scrollTop);
-			const scrollableLeft = Math.floor(scrollLeft);
-
-			table.scrollTop = scrollTop; // scrollTop değiştiğinde `data` yeniden hesaplanır
-			await tick(); // table.scrollTop state'i değiştiğinde, dom'da yapılacak tüm değişiklikleri bekler.
+			const scrollableLeft = Math.floor(scrollLeft); */
 
 			// iOS cihazlardaki bounce effect kontrolü.
 			// Scroll yapılabilir alanın dışına çıkıldığında `tableNode.scrollTo` manuel çalıştırılmaz.
-			if (
+			/* if (
 				scrollableTop >= 0 &&
 				scrollableTop <= scrollableHeight &&
 				scrollableLeft >= 0 &&
 				scrollableLeft <= scrollableWidth
 			) {
 				tableNode.scrollTo({ top: table.scrollTop });
-			}
-
-			isScrolling = false;
+			} */
 		};
 
 		tableNode.addEventListener('scroll', setScrollTop, { passive: true });
@@ -97,6 +94,10 @@
 			class={tableClass}
 			style:grid-template-rows={table.gridTemplateRows}
 			style:grid-template-columns={table.gridTemplateColumns}
+			data-len={table.footers.length * table.settings.tfootRowHeight}
+			data-len2={table.settings.tfootRowHeight}
+			data-rowh={table.settings.theadRowHeight}
+			style:scroll-padding-block={`${table.settings.theadRowHeight}px ${table.footers.length * table.settings.tfootRowHeight}px`}
 			{...attributes}
 		>
 			{@render thead?.()}

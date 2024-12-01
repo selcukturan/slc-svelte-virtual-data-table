@@ -1,24 +1,22 @@
 <script lang="ts" generics="TData extends Row">
 	import type { HTMLAttributes } from 'svelte/elements';
-	import type { Footers, Row, Columns } from './types';
+	import type { Footer, Row, Column } from './types';
 	import type { Snippet } from 'svelte';
 	import { getTable } from './tables.svelte';
 
 	type Props = HTMLAttributes<HTMLDivElement> & {
-		data?: TData[];
+		data: TData[];
 		children: Snippet;
-		fi?: number;
-		foot?: Footers<TData>;
-		col?: Columns<TData>;
-		ci?: number;
+		fi: number;
+		foot: Footer<TData>;
+		col: Column<TData>;
+		ci: number;
 		class?: string;
 	};
 	const { data, children, fi, foot, col, ci, class: classes, ...attributes }: Props = $props();
 
 	const table = getTable<TData>();
-	const bottom = $derived(
-		`${(table.footers.length - (fi === undefined ? 0 : fi) - 1) * table.settings.tfootRowHeight}px`
-	);
+	const bottom = $derived(`${(table.footers.length - fi - 1) * table.settings.tfootRowHeight}px`);
 </script>
 
 <div
@@ -29,22 +27,22 @@
 	style:bottom
 	data-foot={fi}
 	data-col={ci}
-	data-originalcolindex={col?.originalColIndex}
+	data-originalcolindex={col.originalColIndex}
 	{...attributes}
 >
 	<div class="flex h-full w-full justify-between">
 		<div class="hidden items-center">x</div>
 		<div
 			class="flex min-w-0 flex-1 items-center"
-			style:justify-content={col?.alignFooter
-				? col?.alignFooter === 'center'
+			style:justify-content={col.alignFooter
+				? col.alignFooter === 'center'
 					? 'center'
-					: col?.alignFooter === 'right'
+					: col.alignFooter === 'right'
 						? 'flex-end'
 						: 'flex-start'
-				: col?.align === 'center'
+				: col.align === 'center'
 					? 'center'
-					: col?.align === 'right'
+					: col.align === 'right'
 						? 'flex-end'
 						: 'flex-start'}
 		>
